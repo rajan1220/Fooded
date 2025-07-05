@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOODED - Our Menu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff6b6b;
+            --primary-dark: #ff5252;
+            --secondary: #4ecdc4;
+            --dark: #2d3436;
+            --light: #f9f9f9;
+            --gray: #dfe6e9;
+            --success: #00b894;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        .nav-list {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-list li {
+            margin-left: 30px;
+        }
+        
+        .nav-list a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        .nav-list a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-list a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s;
+        }
+        
+        .nav-list a:hover::after {
+            width: 100%;
+        }
+        
+        .rightnav {
+            display: flex;
+            align-items: center;
+        }
+        
+        .search-box {
+            position: relative;
+            margin-right: 15px;
+        }
+        
+        .search-box input {
+            padding: 8px 15px;
+            border: 1px solid var(--gray);
+            border-radius: 30px;
+            width: 200px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        .search-box input:focus {
+            border-color: var(--primary);
+            width: 220px;
+        }
+        
+        .btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 107, 107, 0.3);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        /* Menu Section */
+        .menu-section {
+            padding: 60px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            color: var(--dark);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .menu-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .menu-category {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .menu-category:hover {
+            transform: translateY(-10px);
+        }
+        
+        .category-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+        
+        .category-header h3 {
+            font-size: 22px;
+            margin: 0;
+        }
+        
+        .menu-items {
+            padding: 20px;
+        }
+        
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px dashed var(--gray);
+        }
+        
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .item-name {
+            font-weight: 500;
+        }
+        
+        .item-price {
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .menu-image {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .menu-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Order Section */
+        .order-section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 50px;
+            text-align: center;
+        }
+        
+        .order-platforms {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .platform {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background-color: var(--light);
+            border-radius: 30px;
+            transition: all 0.3s;
+        }
+        
+        .platform:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .platform img {
+            height: 30px;
+        }
+        
+        .phone-order {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 500;
+        }
+        
+        .download-btn {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 0 20px;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-col h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .footer-col p {
+            margin-bottom: 20px;
+            color: #bbb;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .newsletter input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bbb;
+            font-size: 14px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 15px 0;
+            }
+            
+            .nav-list {
+                margin: 15px 0;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-list li {
+                margin: 5px 10px;
+            }
+            
+            .rightnav {
+                margin-top: 15px;
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .search-box {
+                margin-right: 0;
+                margin-bottom: 10px;
+                width: 100%;
+            }
+            
+            .search-box input {
+                width: 100%;
+            }
+            
+            .order-platforms {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <img src="/Image/482f7e78-e492-490c-a2fa-52f0993ad7f5.png" alt="Fooded Logo">
+                    FOODED
+                </div>
+                <ul class="nav-list">
+                    <li><a href="/Index.html">Home</a></li>
+                    <li><a href="/Index.html">About</a></li>
+                    <li><a href="#courses">Menu</a></li>
+                    <li><a href="/Index.html">Support</a></li>
+                </ul>
+                <div class="rightnav">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search menu...">
+                    </div>
+                    <button class="btn btn-primary">Search</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Menu Section -->
+    <section class="menu-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Delicious Menu</h2>
+                <p>Explore our wide variety of dishes prepared with love and the finest ingredients</p>
+            </div>
+            
+            <div class="menu-categories">
+                <div class="menu-category">
+                    <div class="category-header">
+                        <h3>Milk Shakes & Ice Cream</h3>
+                    </div>
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <span class="item-name">Vanilla</span>
+                            <span class="item-price">Rs.75</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Strawberry</span>
+                            <span class="item-price">Rs.75</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Chocolate</span>
+                            <span class="item-price">Rs.80</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Butter Scotch</span>
+                            <span class="item-price">Rs.80</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Pista</span>
+                            <span class="item-price">Rs.80</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Spanish Delite</span>
+                            <span class="item-price">Rs.80</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Black Current</span>
+                            <span class="item-price">Rs.80</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Cherry</span>
+                            <span class="item-price">Rs.80</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Cashew</span>
+                            <span class="item-price">Rs.90</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Fig Fruit</span>
+                            <span class="item-price">Rs.100</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="menu-category">
+                    <div class="category-header">
+                        <h3>Falooda & Fresh Limes</h3>
+                    </div>
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <span class="item-name">Royal Falooda</span>
+                            <span class="item-price">Rs.150</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Pista Falooda</span>
+                            <span class="item-price">Rs.160</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Butter Falooda</span>
+                            <span class="item-price">Rs.170</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">MGS Special Falooda</span>
+                            <span class="item-price">Rs.210</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Fresh Limes</span>
+                            <span class="item-price">Rs.20</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Ginger Limes</span>
+                            <span class="item-price">Rs.20</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Mint Limes</span>
+                            <span class="item-price">Rs.35</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Soda Limes</span>
+                            <span class="item-price">Rs.30</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Grapes Limes</span>
+                            <span class="item-price">Rs.30</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Curry leaves Limes</span>
+                            <span class="item-price">Rs.35</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="menu-category">
+                    <div class="category-header">
+                        <h3>Fruits Salad & Mutton</h3>
+                    </div>
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <span class="item-name">Fruits Salad Pudding</span>
+                            <span class="item-price">Rs.100</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Dry Fruits Salad</span>
+                            <span class="item-price">Rs.120</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Mix Fruits Salad</span>
+                            <span class="item-price">Rs.100</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Mutton Chops</span>
+                            <span class="item-price">Rs.190</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Mutton Chukka</span>
+                            <span class="item-price">Rs.130</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Mutton Fry</span>
+                            <span class="item-price">Rs.120</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Mutton boti Fry</span>
+                            <span class="item-price">Rs.140</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Normal Tea</span>
+                            <span class="item-price">Rs.30</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Normal Coffee</span>
+                            <span class="item-price">Rs.50</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Cold Coffee</span>
+                            <span class="item-price">Rs.90</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+            
+            <div class="menu-categories">
+                <div class="menu-category">
+                    <div class="category-header">
+                        <h3>Paneer Specials</h3>
+                    </div>
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <span class="item-name">Paneer Tikka</span>
+                            <span class="item-price">Rs.100</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Butter Masala</span>
+                            <span class="item-price">Rs.175</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Palak Paneer</span>
+                            <span class="item-price">Rs.180</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Kadai Paneer</span>
+                            <span class="item-price">Rs.180</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Matar Paneer</span>
+                            <span class="item-price">Rs.150</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Sahi Paneer</span>
+                            <span class="item-price">Rs.180</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="menu-category">
+                    <div class="category-header">
+                        <h3>Rice & Breads</h3>
+                    </div>
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <span class="item-name">Plain Rice</span>
+                            <span class="item-price">Rs.80</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Jeera Rice</span>
+                            <span class="item-price">Rs.90</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Veg Pulao</span>
+                            <span class="item-price">Rs.110</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Tandoori Naan</span>
+                            <span class="item-price">Rs.10</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Tandoori Paratha</span>
+                            <span class="item-price">Rs.40</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Roomali Roti</span>
+                            <span class="item-price">Rs.10</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Butter Naan</span>
+                            <span class="item-price">Rs.15</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Khamiri Naan</span>
+                            <span class="item-price">Rs.20</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Tawa Roti</span>
+                            <span class="item-price">Rs.8</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="menu-category">
+                    <div class="category-header">
+                        <h3>Chinese & Noodles</h3>
+                    </div>
+                    <div class="menu-items">
+                        <div class="menu-item">
+                            <span class="item-name">Veg Fried Rice</span>
+                            <span class="item-price">Rs.80</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Mashroom Rice</span>
+                            <span class="item-price">Rs.100</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Paneer Rice</span>
+                            <span class="item-price">Rs.110</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Schezwan Rice</span>
+                            <span class="item-price">Rs.110</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Veg Noodles</span>
+                            <span class="item-price">Rs.80</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Mixed Noodles</span>
+                            <span class="item-price">Rs.110</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Schezwan Noodles</span>
+                            <span class="item-price">Rs.140</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Talwanese Noodles</span>
+                            <span class="item-price">Rs.100</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Veg Manchurian</span>
+                            <span class="item-price">Rs.90</span>
+                        </div>
+                        <div class="menu-item">
+                            <span class="item-name">Gobi Manchurian</span>
+                            <span class="item-price">Rs.80</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+            <div class="order-section">
+                <h3>Ready to Order?</h3>
+                <p>Choose your preferred platform or call us directly</p>
+                
+                <div class="order-platforms">
+                    <div class="platform">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Zomato_logo.png" alt="Zomato">
+                        <span>Order on Zomato</span>
+                    </div>
+                    <div class="platform">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/1/13/Swiggy_logo.png" alt="Swiggy">
+                        <span>Order on Swiggy</span>
+                    </div>
+                </div>
+                
+                <div class="phone-order">
+                    <i class="fas fa-phone-alt"></i>
+                    <span>+91 1800 120 123</span>
+                </div>
+            </div>
+            
+            <div class="download-btn">
+                <button class="btn btn-primary">
+                    <i class="fas fa-download"></i> Download Full Menu (PDF)
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>About Us</h3>
+                    <p>We partner with you to fulfil your requirements for on-demand talent and a complete food experience.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Link</h3>
+                    <ul class="footer-links">
+                        <li><a href="/FAQs.html">FAQs</a></li>
+                        <li><a href="/Find-a-Store.html">Find a Store location</a></li>
+                        <li><a href="/Privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Link</h3>
+                    <ul class="footer-links">
+                        <li><a href="/Index.html">Home</a></li>
+                        <li><a href="/Index.html">About</a></li>
+                        <li><a href="#Support">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Subscribe</h3>
+                    <p>See offers and any kind of changes first</p>
+                    <form class="newsletter">
+                        <input type="email" placeholder="Enter your email.." required>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 FOODED. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple JavaScript for interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Form submission handler
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Thank you for your subscription!');
+                    this.reset();
+                });
+            });
+            
+            // Download button handler
+            const downloadBtn = document.querySelector('.download-btn button');
+            downloadBtn.addEventListener('click', function() {
+                alert('Menu download will start shortly');
+                // In a real implementation, this would trigger a file download
+                // window.location.href = '/Image/Menu.pdf';
+            });
+            
+            // Platform order buttons
+            const platforms = document.querySelectorAll('.platform');
+            platforms.forEach(platform => {
+                platform.addEventListener('click', function() {
+                    const platformName = this.querySelector('span').textContent;
+                    alert(`Redirecting to ${platformName}`);
+                    // In a real implementation, this would redirect to the platform
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOODED - Find a Store</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff6b6b;
+            --primary-dark: #ff5252;
+            --secondary: #4ecdc4;
+            --dark: #2d3436;
+            --light: #f9f9f9;
+            --gray: #dfe6e9;
+            --success: #00b894;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        .nav-list {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-list li {
+            margin-left: 30px;
+        }
+        
+        .nav-list a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        .nav-list a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-list a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s;
+        }
+        
+        .nav-list a:hover::after {
+            width: 100%;
+        }
+        
+        .rightnav {
+            display: flex;
+            align-items: center;
+        }
+        
+        .search-box {
+            position: relative;
+            margin-right: 15px;
+        }
+        
+        .search-box input {
+            padding: 8px 15px;
+            border: 1px solid var(--gray);
+            border-radius: 30px;
+            width: 200px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        .search-box input:focus {
+            border-color: var(--primary);
+            width: 220px;
+        }
+        
+        .btn {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(255, 107, 107, 0.3);
+        }
+        
+        /* Store Locator Section */
+        .store-locator {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h1 {
+            font-size: 36px;
+            color: var(--dark);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .locator-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .search-filters {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            height: fit-content;
+        }
+        
+        .search-filters h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .filter-group {
+            margin-bottom: 25px;
+        }
+        
+        .filter-group h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .filter-input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid var(--gray);
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .filter-input:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        
+        .filter-checkbox {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .filter-checkbox input {
+            margin-right: 10px;
+        }
+        
+        .map-container {
+            height: 600px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .map-placeholder {
+            width: 100%;
+            height: 100%;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+        
+        .store-list {
+            margin-top: 40px;
+        }
+        
+        .store-list h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .stores-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .store-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+        
+        .store-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .store-image {
+            height: 180px;
+            background-color: #eee;
+            position: relative;
+        }
+        
+        .store-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--primary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .store-info {
+            padding: 20px;
+        }
+        
+        .store-info h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .store-address {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .store-hours {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .store-hours strong {
+            color: var(--dark);
+        }
+        
+        .store-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        
+        .store-distance {
+            display: flex;
+            align-items: center;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .store-distance i {
+            margin-right: 5px;
+            color: var(--primary);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 0 20px;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-col h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .footer-col p {
+            margin-bottom: 20px;
+            color: #bbb;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .newsletter input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bbb;
+            font-size: 14px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .locator-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .map-container {
+                height: 400px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 15px 0;
+            }
+            
+            .nav-list {
+                margin: 15px 0;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-list li {
+                margin: 5px 10px;
+            }
+            
+            .rightnav {
+                margin-top: 15px;
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .search-box {
+                margin-right: 0;
+                margin-bottom: 10px;
+                width: 100%;
+            }
+            
+            .search-box input {
+                width: 100%;
+            }
+            
+            .section-title h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <img src="/Image/482f7e78-e492-490c-a2fa-52f0993ad7f5.png" alt="Fooded Logo">
+                    FOODED
+                </div>
+                <ul class="nav-list">
+                    <li><a href="/Index.html">Home</a></li>
+                    <li><a href="/Index.html">About</a></li>
+                    <li><a href="/Menu.html">Menu</a></li>
+                    <li><a href="/Index.html">Support</a></li>
+                </ul>
+                <div class="rightnav">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search...">
+                    </div>
+                    <button class="btn btn-primary">Search</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Store Locator Section -->
+    <section class="store-locator">
+        <div class="container">
+            <div class="section-title">
+                <h1>Find a FOODED Location</h1>
+                <p>Discover our restaurants near you and enjoy our delicious food</p>
+            </div>
+            
+            <div class="locator-container">
+                <div class="search-filters">
+                    <h2>Search Filters</h2>
+                    
+                    <div class="filter-group">
+                        <h3>Location</h3>
+                        <input type="text" class="filter-input" placeholder="Enter city, zip code or address">
+                    </div>
+                    
+                    <div class="filter-group">
+                        <h3>Distance</h3>
+                        <select class="filter-input">
+                            <option>Within 5 miles</option>
+                            <option>Within 10 miles</option>
+                            <option>Within 25 miles</option>
+                            <option>Within 50 miles</option>
+                            <option>Any distance</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <h3>Services</h3>
+                        <div class="filter-checkbox">
+                            <input type="checkbox" id="dine-in" checked>
+                            <label for="dine-in">Dine-in</label>
+                        </div>
+                        <div class="filter-checkbox">
+                            <input type="checkbox" id="takeout" checked>
+                            <label for="takeout">Takeout</label>
+                        </div>
+                        <div class="filter-checkbox">
+                            <input type="checkbox" id="delivery">
+                            <label for="delivery">Delivery</label>
+                        </div>
+                        <div class="filter-checkbox">
+                            <input type="checkbox" id="drive-thru">
+                            <label for="drive-thru">Drive-thru</label>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <h3>Features</h3>
+                        <div class="filter-checkbox">
+                            <input type="checkbox" id="outdoor">
+                            <label for="outdoor">Outdoor Seating</label>
+                        </div>
+                        <div class="filter-checkbox">
+                            <input type="checkbox" id="parking">
+                            <label for="parking">Parking Available</label>
+                        </div>
+                        <div class="filter-checkbox">
+                            <input type="checkbox" id="wifi">
+                            <label for="wifi">Free WiFi</label>
+                        </div>
+                        <div class="filter-checkbox">
+                            <input type="checkbox" id="kids">
+                            <label for="kids">Kids Play Area</label>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" style="width: 100%;">Search Locations</button>
+                </div>
+                
+                <div class="map-container">
+                    <div class="map-placeholder">
+                        <div>
+                            <i class="fas fa-map-marker-alt" style="font-size: 48px; color: var(--primary); margin-bottom: 15px;"></i>
+                            <p>Interactive map would display here</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="store-list">
+                <h2>FOODED Locations Near You</h2>
+                
+                <div class="stores-grid">
+                    <div class="store-card">
+                        <div class="store-image">
+                            <div class="store-badge">Open Now</div>
+                        </div>
+                        <div class="store-info">
+                            <h3>FOODED Downtown</h3>
+                            <p class="store-address">123 Main Street, City Center, NY 10001</p>
+                            <p class="store-hours"><strong>Hours:</strong> Mon-Fri: 10AM-10PM, Sat-Sun: 9AM-11PM</p>
+                            <div class="store-actions">
+                                <button class="btn btn-primary">View Menu</button>
+                                <span class="store-distance"><i class="fas fa-location-arrow"></i> 1.2 mi</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="store-card">
+                        <div class="store-image">
+                            <div class="store-badge">Open Now</div>
+                        </div>
+                        <div class="store-info">
+                            <h3>FOODED Westside</h3>
+                            <p class="store-address">456 Oak Avenue, West District, NY 10002</p>
+                            <p class="store-hours"><strong>Hours:</strong> Mon-Fri: 11AM-10PM, Sat-Sun: 10AM-10PM</p>
+                            <div class="store-actions">
+                                <button class="btn btn-primary">View Menu</button>
+                                <span class="store-distance"><i class="fas fa-location-arrow"></i> 2.5 mi</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="store-card">
+                        <div class="store-image">
+                            <div class="store-badge">Closed</div>
+                        </div>
+                        <div class="store-info">
+                            <h3>FOODED Riverside</h3>
+                            <p class="store-address">789 River Road, Riverside, NY 10003</p>
+                            <p class="store-hours"><strong>Hours:</strong> Mon-Fri: 11AM-9PM, Sat-Sun: 10AM-9PM</p>
+                            <div class="store-actions">
+                                <button class="btn btn-primary">View Menu</button>
+                                <span class="store-distance"><i class="fas fa-location-arrow"></i> 3.1 mi</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>About Us</h3>
+                    <p>We partner with you to fulfil your requirements for on-demand talent and a complete food experience.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Link</h3>
+                    <ul class="footer-links">
+                        <li><a href="/FAQs.html">FAQs</a></li>
+                        <li><a href="/Find-a-Store.html">Find a Store location</a></li>
+                        <li><a href="/Privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Link</h3>
+                    <ul class="footer-links">
+                        <li><a href="/Index.html">Home</a></li>
+                        <li><a href="/Index.html">About</a></li>
+                        <li><a href="/Index.html">Support</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Subscribe</h3>
+                    <p>See offers and any kind of changes first</p>
+                    <form class="newsletter">
+                        <input type="email" placeholder="Enter your email.." required>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 FOODED. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+            
+            // Form submission handler
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Thank you for your subscription!');
+                    this.reset();
+                });
+            });
+            
+            // Store card click handler
+            const storeCards = document.querySelectorAll('.store-card');
+            storeCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // In a real implementation, this would show more details about the store
+                    console.log('Store selected:', this.querySelector('h3').textContent);
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
